@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <style>
+        body{
+            margin: 0px;
+            font-family: sans-serif;
+            font-weight: 100;
+        }
+        .top-notice{
+            height: 50px;
+            text-align: center;
+            background-color: #F6F6F6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+        }
+        .top-nav p {
+            color: #353434;
+        }
+        .outer-container {
+            overflow-y: scroll;
+        }
+        ::-webkit-scrollbar {
+            width: 0;  /* Remove scrollbar space */
+            background: transparent;  /* Optional: just make scrollbar invisible */
+        }
+        .page-header {
+            height: 100px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 5px 30px;
+            align-items: center;
+            font-family: proxima-nova-regular,Arial,sans-serif;
+        }
+        .map-icon {
+            background: url('./icons/map.png');
+            background-size: 20px;
+            height: 20px;
+            width: 20px;
+            margin: 0 5px;
+        }
+        .page-header-left {
+            display: flex;
+            flex-direction: row;
+            width: 15%;
+            align-items: center;
+        }
+        .page-header-mid {
+            color: #c10606;
+            display: flex;
+            flex-direction: column;
+        }
+        .page-header-name-top {
+            font-size: 70px; 
+            padding: 0px;
+            text-align: center;
+        }
+        .page-header-name-below {
+            font-size: 12px; 
+            padding: 0px;
+            text-align: center;
+            margin-top: -10px;
+        }
+        .search-icon {
+            background: url('./icons/search.png');
+            background-size: 20px;
+            height: 20px;
+            width: 20px;
+            margin: 0 6px;
+        }
+        .page-header-right {
+            display: flex;
+            flex-direction: row;
+            width: 15%;
+        }
+        .page-header-right-before {
+            display: flex;
+            border-right: 1px solid lightgrey;
+            align-items: center;
+        }
+        .page-header-right-after {
+            display: flex;
+            flex-direction: row;
+        }
+        .profile-icon {
+            background: url('./icons/profile.png');
+            background-size: 20px;
+            height: 20px;
+            width: 20px;
+            margin: 0 6px;
+        }
+        .heart-icon {
+            background: url('./icons/heart.png');
+            background-size: 20px;
+            height: 20px;
+            width: 20px;
+            margin: 0 6px;
+        }
+        .cart-icon {
+            background: url('./icons/shopping-cart.png');
+            background-size: 20px;
+            height: 20px;
+            width: 20px;
+            margin: 0 6px;
+        }
+        .navbar {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin: 10px 0;
+            border-top: 2px solid lightgrey;
+            border-bottom: 2px solid lightgrey;
+            padding: 15px 0;
+        }
+        .navbar div {
+            margin: 0 10px;
+        }
+        .about-us {
+            text-align: center;
+            width: 60%;
+            margin: 100px auto
+        }
+        .about-us h1 {
+            font-weight: 200;
+        }
+        .about-us p {
+            line-height: 30px;
+            font-size: 20px;
+        }
+        .banner img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        .business {
+            text-align: center;
+            background-color: #f6f6f6;
+            margin-top: -5px;
+            padding: 0 30px 50px 30px;
+        }
+        .business-title {
+            font-weight: 300;
+            margin: 0px;
+            padding: 50px 0 20px 0;
+            font-size: 25px;
+        }
+        .business-sections {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        .business-box {
+            width: 350px;  
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid transparent;
+            box-shadow: 1px 4px transparent;
+            transition: 0.2s ease-in;
+        }
+        .business-box p {
+            line-height: 1.5;
+            font-weight: 200;
+        }
+        .business-box h3 {
+            margin-bottom: 0px;
+            font-weight: normal;
+        }
+        .like-icon {
+            background: url('./icons/like.png');
+            background-size: 20px;
+            height: 20px;
+            width: 20px;
+        }
+        .star-icon {
+            background: url('./icons/star.png');
+            background-size: 20px;
+            height: 20px;
+            width: 20px;
+        }
+        .badge-icon {
+            background: url('./icons/badge.png');
+            background-size: 20px;
+            height: 20px;
+            width: 20px;
+        }
+        .business-box:hover .like-icon {
+            background: url('./icons/like-hover.png');
+            background-size: 20px;
+            height: 20px;
+            width: 20px;
+            transition: 0.2s ease-in;
+        }
+        .business-box:hover .star-icon {
+            background: url('./icons/star-hover.png');
+            background-size: 20px;
+            height: 20px;
+            width: 20px;
+            transition: 0.2s ease-in;
+        }
+        .business-box:hover .badge-icon {
+            background: url('./icons/badge-hover.png');
+            background-size: 20px;
+            height: 20px;
+            width: 20px;
+            transition: 0.2s ease-in;
+        }
+        .business-box:hover {
+            border: 1px solid red;
+            box-shadow: 1px 4px lightgrey;
+            transition: 0.2s ease-in;
+            background-color: white;
+        }
+        .accordion {
+            margin: 100px 150px;
+        }
+        .accordion-section {
+            color: #444;
+            cursor: pointer;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            border-top: 1px solid lightgrey;
+            border-bottom: 1px solid lightgrey;
+            background-color: white;
+            font-size: 20px;
+        }
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 18px;
+        }
+        .panel {
+            display: none;
+            padding-right: 5%;
+            padding-left: 0px;
+        }
+        .panel p {
+            line-height: 1.3;
+        }
+        .accordion-symbol {
+            width: 20px;
+            height: 20px;
+            position: relative;
+        }
+        .accordion-symbol:after {
+            content: '\002B';   /*plus symbol*/
+            font-size: 25px;
+            position: absolute;
+            top: -5px;
+            left: 3px;
+        }
+        .active:after{
+            content: '\002D';
+            font-size: 35px;
+            position: absolute;  /*minus symbol*/
+            top: -11px;
+            left: 5px;
+        }
+        .footer {
+            height: 200px;
+            border-top: 2px solid lightgrey;
+            display: flex;
+            flex-direction: row;
+            padding: 2% 5% 5% 5%;
+            justify-content: space-around;
+        }
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            width: 25%;
+        }
+        .footer-left input {
+            height: 40px;
+            padding-left: 5%;
+            margin: 5% 0;
+        }
+        .footer-icons {
+            display: flex;
+            margin: 5% 0;
+        }
+        .f-icon {
+            background: url('./icons/facebook.png');
+            background-size: 25px;
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+            margin: 0 3% 0 0;
+        }
+        .i-icon {
+            background: url('./icons/instagram.png');
+            background-size: 25px;
+            height: 25px;
+            width: 25px;
+            margin: 0 3%;
+        }
+        .p-icon {
+            background: url('./icons/pinterest.png');
+            background-size: 25px;
+            height: 25px;
+            width: 25px;
+            margin: 0 0 0 3%;
+        }
+        .footer-right {
+            display: flex;
+            flex-direction: row;
+            width: 60%;
+            justify-content: space-around;
+        }
+        .footer-right-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 100%;
+            margin: 5% 0;
+            color: grey;
+        }
+        .footer-right-section div {
+            margin: 5px 0;
+        }
+
+    </style>
+
+    <div class="outer-container">
+        <div class="top-notice"><p>FREE EXPRESS DELIVERY ON ALL ORDERS OVER $150^</p></div>
+        <div class="container">
+            <div class="page-header">
+                <div class="page-header-left">
+                    <i class="map-icon"></i>
+                    <div>FIND A STORE</div>
+                </div>
+                <div class="page-header-mid">
+                    <div class="page-header-name-top">seed</div>
+                    <div class="page-header-name-below">HERITAGE</div>
+                </div>
+                <div class="page-header-right">
+                    <div class="page-header-right-before">
+                        <i class="search-icon"></i>
+                        <div style="margin: 0 6px;">SEARCH</div>
+                    </div>
+                    <div class="page-header-right-after">
+                        <div class="profile-icon"></div>
+                        <div class="heart-icon"></div>
+                        <div class="cart-icon"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navbar">
+                <div>NEW ARRIVALS</div>
+                <div>WOMEN</div>
+                <div>GIRLS</div>
+                <div>BOYS</div>
+                <div>BABY</div>
+                <div>NEWBORN</div>
+                <div>TEEN</div>
+                <div>GIFTING</div>
+                <div style="color:red">SALE</div>
+                <div>STORIES</div>
+            </div>
+
+            <div class="about-us">
+                <h1>ABOUT US</h1>
+                <p>
+                    Established in 2000, Seed Heritage began as a childrenswear boutique with a single 
+                    shopfront in Armadale, Victoria. From day one, our focus has been on beautiful, 
+                    unique designs and products made from natural fibres and fabrics. Our range expanded 
+                    \to include a baby collection, followed by women’s apparel and later a range for teens.  
+                    Since then, we’ve launched Collection, a women’s capsule range of sophisticated, luxe, 
+                    trend-led styles, and Seed Party!, a fun, sparkly range for girls aged 1 to 10.
+                </p>
+            </div>
+
+            <div class="banner">
+                <img src="./imgs/seed-banner.jpeg" alt="">
+            </div>
+
+            <div class="business">
+                <div class="business-title">THE SEED BUSINESS</div>
+                <div class="business-sections">
+                    <div class="business-box">
+                        <i class="like-icon"></i>
+                        <h3>Our Philosophy</h3>
+                        <p>
+                            Seed Heritage seeks to connect with customers by offering a one-of-a-kind and 
+                            compelling retail experience.  Our approach is simple: We believe in great design, 
+                            high-quality products and exceptional customer service. 
+                        </p>
+                    </div>
+                    <div class="business-box">
+                        <i class="star-icon"></i>
+                        <h3>Our Greatest Supporters</h3>
+                        <p>
+                            Over the years, Seed Heritage has garnered a loyal following from those shopping 
+                            for themselves, their little ones, and others too. We now reach a global audience, 
+                            boasting more than 200 stores in destinations including New Zealand, Hong Kong and 
+                            Singapore. Our online store is always open and ships worldwide. The future belongs to the things that grow.  
+                        </p>
+                    </div>
+                    <div class="business-box">
+                        <i class="badge-icon"></i>
+                        <h3>Our Stories</h3>
+                        <p>
+                            Our stores are designed to capture the rich history of our brand while reflecting 
+                            our signature pared-back style. Seed Heritage stores are comprised of ‘pods’ – key 
+                            product sections inspired by our brand name – creating a considered, engaging space 
+                            that both adults and children can enjoy.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-section">
+                    <div class="accordion-header">
+                        <span>Heading 1</span><span class="accordion-symbol"></span>
+                    </div>
+                    <div class="panel">
+                        <p>
+                            Seed Heritage has become a destination for all your sartorial needs. Collections are 
+                            updated monthly, ensuring new product is always available. Our womenswear is accessible, 
+                            while still maintaining a strong design aesthetic and modern edge. Our younger customers 
+                            enjoy options that are both classic and playful. We have wardrobe staples plus extra fun 
+                            party pieces for those times that call for something a bit more special. Every piece is 
+                            exceptionally designed and made to last.
+                        </p>
+                    </div>
+                </div>
+                <div class="accordion-section">
+                    <div class="accordion-header">
+                        <span>Heading 2</span><span class="accordion-symbol"></span>
+                    </div>
+                    <div class="panel">
+                        <p>
+                            Seed Heritage has become a destination for all your sartorial needs. Collections are 
+                            updated monthly, ensuring new product is always available. Our womenswear is accessible, 
+                            while still maintaining a strong design aesthetic and modern edge. Our younger customers 
+                            enjoy options that are both classic and playful. We have wardrobe staples plus extra fun 
+                            party pieces for those times that call for something a bit more special. Every piece is 
+                            exceptionally designed and made to last.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="footer-left">
+                    <div>Sign up for the latest trends and styles straight to your inbox</div>
+                    <input type="text" placeholder="Enter your email">
+                    <div class="footer-icons">
+                        <i class="f-icon"></i>
+                        <i class="i-icon"></i>
+                        <i class="p-icon"></i>
+                    </div>
+                </div>
+                <div class="footer-right">
+                    <div class="footer-right-section-outer">
+                        <div>ABOUT US</div>
+                        <div class="footer-right-section">
+                                <div>Our Story</div>
+                                <div>Sustainability</div>
+                                <div>Careers</div>
+                                <div>Affiliates</div>
+                                <div>Privacy Policy</div>
+                                <div>Terms of Us</div>
+                        </div>
+                    </div>
+                    <div class="footer-right-section-outer">
+                        <div>CUSTOMER SERVICE</div>
+                        <div class="footer-right-section">
+                            <div>Help Centre</div>
+                            <div>Contact Us</div>
+                            <div>Delivery</div>
+                            <div>Returns & Exchanges</div>
+                            <div>Wash Guides</div>
+                            <div>How To Care</div>
+                        </div>
+                    </div>
+                    <div class="footer-right-section-outer">
+                        <div>QUICK LINKS</div>
+                        <div class="footer-right-section">
+                            <div>Find a Store</div>
+                            <div>eGift Cards</div>
+                            <div>New Zealand Site</div>
+                            <div>Hong Kong SAR, China Site</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('.accordion-symbol').on('click', function(e) {
+            e.stopPropagation();
+            $(this).closest('.accordion-section').find('.panel').animate({ height: "toggle", opacity: "toggle"}, "slow");
+            if($(this).hasClass('active')){
+                $(this).removeClass('active');
+            } else {
+                $(this).addClass('active');
+            }
+
+            selector = $(this).closest('.accordion-section').siblings();
+            if(selector.find('.accordion-symbol').hasClass('active')){
+                selector.find('.accordion-symbol').removeClass('active');
+                selector.find('.panel').animate({ height: "toggle", opacity: "toggle"}, "slow");
+            }
+        });
+
+        $('.accordion-header').not('.accordion-symbol').on('click', function() {
+            if(!$(this).find('.accordion-symbol').hasClass('active')){
+                $(this).find('.accordion-symbol').addClass('active')
+                $(this).closest('.accordion-section').find('.panel').animate({ height: "toggle", opacity: "toggle"}, "slow");
+            }
+
+            selector = $(this).closest('.accordion-section').siblings();
+            if(selector.find('.accordion-symbol').hasClass('active')){
+                selector.find('.accordion-symbol').removeClass('active');
+                selector.find('.panel').animate({ height: "toggle", opacity: "toggle"}, "slow");
+            }
+        });
+
+
+    </script>
+
+</body>
+</html>
